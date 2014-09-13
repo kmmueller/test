@@ -29,9 +29,9 @@ df=pd.read_sql_query(sql,engine)
 sql14=""
 for i in df.index:
     if i==0:
-        sql14=df['column_name'][i]
+        sql14=df['COLUMN_NAME'][i]
     else:
-        sql14=sql14+", "+df['column_name'][i]
+        sql14=sql14+", "+df['COLUMN_NAME'][i]
       
 sql22="SELECT "+sql14+" from mo140118351"
 #ba=psql.frame_query(sql22,con=conn)
@@ -39,7 +39,7 @@ ba=pd.read_sql_query(sql22,engine)
 # re.findall(r'\d+',x)[1]
 z=list()
 for i in df.index:
-   x=df['column_name'][i]
+   x=df['COLUMN_NAME'][i]
 # use regular expressions, find sets of one or more digits; save the second set
    y=re.findall(r'\d+',x)[1]                         
    z.append(y)
