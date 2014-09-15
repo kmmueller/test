@@ -2,6 +2,9 @@
 Created on Sep 4, 2014
 
 @author: mueller
+
+9/14/14 - Push latest version back under new name
+
 '''
 import pandas as pd
 import numpy as np
@@ -262,7 +265,7 @@ def float_anim(i):
 ax1.view_init(elev=34, azim=-140)
 ax2.view_init(elev=34, azim=-140)
 
-anim = animation.FuncAnimation(fig, float_anim, frames=1500, interval=1, blit=False)
+anim = animation.FuncAnimation(fig, float_anim, frames=150, interval=1, blit=False)
 
 
 
