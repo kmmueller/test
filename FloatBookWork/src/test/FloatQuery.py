@@ -21,35 +21,39 @@ from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 import matplotlib.animation as animation
 import mpl_toolkits.mplot3d.axes3d as p3
-engine=create_engine("mysql+mysqlconnector://root:admin@localhost/floatbook")
+engine=create_engine("mysql+mysqlconnector://root:admin@localhost/floatbook")  # +mysqlconnector = use the mysql ODBC connector instead of the native one
 rcParams.update({'figure.autolayout':True})
 #conn=mysql.connector.connect(user = 'root', password = 'admin', host = '127.0.0.1', database='floatbook')
 sql="SELECT * from vtest3 where COLUMN_NAME like '%C%\_bid' or COLUMN_NAME like '%C%\_ask' or COLUMN_NAME like '%P%\_bid' or COLUMN_NAME like '%P%\_ask'"
-pd.set_option('display.max_columns',300) 
+## This procedure vtest3 creates a single column = list, and this procedure is only pulling the big/ask column headers from sql, storing them int he dataframe
+pd.set_option('display.max_columns',300)   ## To increase the number of columns as the default into the dataframe
 pd.set_option('display.max_rows',300)
 #df=psql.frame_query(sql,con=conn) 
-df=pd.read_sql_query(sql,engine)
-sql14=""
-for i in df.index:
+df=pd.read_sql_query(sql,engine)  # df = dataframe.  Loading the dataframe to get the array.
+sql14=""  # initialization of variables.   Needed?   
+for i in df.index:   # dataframe exists.   Looping through 
     if i==0:
         sql14=df['COLUMN_NAME'][i]
     else:
-        sql14=sql14+", "+df['COLUMN_NAME'][i]
+        sql14=sql14+", "+df['COLUMN_NAME'][i]  # This loops to create one long list that only has bids and ask (puts and calls).   For all puts/calls.
       
-sql22="SELECT "+sql14+" from mo140118351"
+sql22="SELECT "+sql14+" from mo140118351"   # SQL Query to populate the next dataframe:  Now we have the column names we want (bid/ask), and we are getting all the rows 
+# +sqll4+ ==> concatenate variable into string.   Surrounded by quotes = literal.  
 #ba=psql.frame_query(sql22,con=conn)
-ba=pd.read_sql_query(sql22,engine)
+ba=pd.read_sql_query(sql22,engine)  # this is the ba = bid/ask dataframe.   From the query sql22
 # re.findall(r'\d+',x)[1]
 z=list()
 for i in df.index:
-   x=df['COLUMN_NAME'][i]
+   x=df['COLUMN_NAME'][i]  #Row index = i 
 # use regular expressions, find sets of one or more digits; save the second set
-   y=re.findall(r'\d+',x)[1]                         
+   y=re.findall(r'\d+',x)[1]       
+                     
    z.append(y)
+## This process gets all the strikes
 
-# remove duplicates - a set removes duplicates, converterd back to list afterwards
-aa=list(set(z))
-aa.sort()
+# remove duplicates - a set removes duplicates, converted back to list afterwards
+aa=list(set(z))  ## find unique values in a list
+aa.sort()  # sorting variable.   This will rewrite upon itself and store a new sorted version
 # aa is now my list of strikes
 ab=[float(i) for i in aa]
 # ab is now a float list of strikes (to do math)
@@ -59,7 +63,7 @@ print ('Strikes:')
 print (aa)
 print ('Bids & asks: "')
 print (df)
-scbh=ba.iloc[:,37]
+scbh=ba.iloc[:,37]  #Row, column
 bpah=ba.iloc[:,39]
 spbl=ba.iloc[:,34]
 bcal=ba.iloc[:,32]
