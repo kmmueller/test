@@ -262,7 +262,7 @@ def float_anim(i):
 ax1.view_init(elev=34, azim=-140)
 ax2.view_init(elev=34, azim=-140)
 
-anim = animation.FuncAnimation(fig, float_anim, frames=1500, interval=1, blit=False)
+anim = animation.FuncAnimation(fig, float_anim, frames=150, interval=1, blit=False)
 
 
 
